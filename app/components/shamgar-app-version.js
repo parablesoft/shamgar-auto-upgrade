@@ -1,0 +1,1 @@
+export { default } from 'shamgar-auto-upgrade/components/shamgar-app-version';
