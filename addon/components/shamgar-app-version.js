@@ -1,11 +1,14 @@
 import Ember from 'ember';
 import layout from '../templates/components/shamgar-app-version';
+import ShamgarAppVersion from "../utils/shamgar-app-version";
 
 
-export default Ember.Component.extend({
+const {Component,computed} = Ember;
+export default Component.extend({
   layout,
-  version(){
-    return shamgarAppVersion();
-  },
+  tagName: "",
+  version: computed(function(){
+    return ShamgarAppVersion();
+  }),
 
 });
