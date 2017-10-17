@@ -6,7 +6,10 @@
     "ember-addon"
   ],
   "license": "MIT",
-  "author": "",
+  "repository": "https://github.com/parablesoft/shamgar-auto-upgrade",
+  "bugs": "https://github.com/parablesoft/shamgar-auto-upgrade/issues",
+  "homepage": "https://github.com/parablesoft/shamgar-auto-upgrade",
+  "author": "Vic Amuso <vic@parablesoft.com>",
   "directories": {
     "doc": "doc",
     "test": "tests"
