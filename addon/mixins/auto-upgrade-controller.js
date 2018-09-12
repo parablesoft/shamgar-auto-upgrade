@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { cancel, later } from '@ember/runloop';
+import Mixin from '@ember/object/mixin';
+import { set, get } from '@ember/object';
 import config from "ember-get-config";
 
 
-const {Mixin,get,set} = Ember;
 const normalPoll = 10000;
 const reminderPoll = 180000;
 
@@ -17,7 +19,7 @@ export default Mixin.create({
   },
   cancelChecker(){
     let checker = get(this,'checker');
-    Ember.run.cancel(checker);
+    cancel(checker);
     set(this,'checker',null);
   },
   upgradePending: false,
@@ -48,14 +50,14 @@ export default Mixin.create({
     return version.match(versionRegExp)[0].trim();
   },
   registerChecker(interval){
-    let checker = Ember.run.later(this,function(){
+    let checker = later(this,function(){
       this.checkVersion();
     },interval);
     set(this,"checker",checker);
   },
   checkVersion(){
     let url = `/latest.txt?timestamp=${new Date().getTime()}`
-    Ember.$.get(url).then(data =>{
+    $.get(url).then(data =>{
       if(this.versionWithoutSha() != data.trim()){
 	this.confirmReload();
       }

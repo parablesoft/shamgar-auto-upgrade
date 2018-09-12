@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import AutoUpgrade from "shamgar-auto-upgrade/mixins/auto-upgrade-controller";
 
 
-export default Ember.Controller.extend(AutoUpgrade,{
+export default Controller.extend(AutoUpgrade,{
 });

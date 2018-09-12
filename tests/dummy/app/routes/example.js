@@ -1,5 +1,5 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import AutoUpgrade from "shamgar-auto-upgrade/mixins/auto-upgrade-route";
 
-export default Ember.Route.extend(AutoUpgrade,{
+export default Route.extend(AutoUpgrade,{
 });
