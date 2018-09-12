@@ -13,63 +13,65 @@ const {
     version
   }
 } = config;
+
+/* globals swal */
 export default Mixin.create({
-  stopVersionCheck(){
+  stopVersionCheck() {
     this.cancelChecker();
   },
-  cancelChecker(){
-    let checker = get(this,'checker');
+  cancelChecker() {
+    let checker = get(this, 'checker');
     cancel(checker);
-    set(this,'checker',null);
+    set(this, 'checker', null);
   },
   upgradePending: false,
-  confirmReload(){
+  confirmReload() {
     this.cancelChecker();
     let message = "A new version of the software is available. If you would like to load it up now, click upgrade. If you are in the middle of working on something, we'll remind you again in a few minutes.";
     let self = this;
     swal({
-      title: "Upgrade Available!",
-      text: message,
-      showCancelButton: true,
-      cancelButtonText: "No, Remind me Later",
-      confirmButtonColor: "#016b40",
-      confirmButtonText: "Yes, Upgrade!",
-      closeOnConfirm: true},
-      function(isConfirm){
-	if(isConfirm){
-	  document.location.reload();
-	}
-	else{
-	  set(self,"upgradePending",true);
-	  self.registerChecker(reminderPoll);
-	}
+        title: "Upgrade Available!",
+        text: message,
+        showCancelButton: true,
+        cancelButtonText: "No, Remind me Later",
+        confirmButtonColor: "#016b40",
+        confirmButtonText: "Yes, Upgrade!",
+        closeOnConfirm: true
+      },
+      function (isConfirm) {
+        if (isConfirm) {
+          document.location.reload();
+        } else {
+          set(self, "upgradePending", true);
+          self.registerChecker(reminderPoll);
+        }
       });
   },
-  versionWithoutSha(){
+  versionWithoutSha() {
     const versionRegExp = /\d+[.]\d+[.]\d+/;
     return version.match(versionRegExp)[0].trim();
   },
-  registerChecker(interval){
-    let checker = later(this,function(){
+  registerChecker(interval) {
+    let checker = later(this, function () {
       this.checkVersion();
-    },interval);
-    set(this,"checker",checker);
+    }, interval);
+    set(this, "checker", checker);
   },
-  checkVersion(){
+  checkVersion() {
     let url = `/latest.txt?timestamp=${new Date().getTime()}`
-    $.get(url).then(data =>{
-      if(this.versionWithoutSha() != data.trim()){
-	this.confirmReload();
-      }
-      else{
-	this.registerChecker(normalPoll);
-      }
-    });
+    $.get(url)
+      .then(data => {
+        if (this.versionWithoutSha() != data.trim()) {
+          this.confirmReload();
+        } else {
+          this.registerChecker(normalPoll);
+        }
+      });
   },
-  startVersionCheck(){
+  startVersionCheck() {
     this.checkVersion();
   },
-  init(){
+  init() {
     this._super(...arguments);
     this.startVersionCheck();
   }

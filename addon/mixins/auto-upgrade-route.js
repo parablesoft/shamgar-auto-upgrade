@@ -1,13 +1,13 @@
 import Mixin from '@ember/object/mixin';
 
 export default Mixin.create({
-  resetController(controller){
+  resetController(controller) {
     controller.stopVersionCheck();
   },
-  actions:{
-    didTransition(transition){
-      if(this.controller.get("upgradePending",true)){
-	document.location.reload();
+  actions: {
+    didTransition() {
+      if (this.controller.get("upgradePending", true)) {
+        document.location.reload();
       }
     },
   }
