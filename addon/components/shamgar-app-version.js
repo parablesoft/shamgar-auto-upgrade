@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/shamgar-app-version';
 import ShamgarAppVersion from "../utils/shamgar-app-version";
 
 
-const {Component,computed} = Ember;
 export default Component.extend({
   layout,
   tagName: "",
